@@ -1,0 +1,201 @@
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+body {
+    background-color: #3d464d;
+    color: #58666e;
+    margin: 0;
+    line-height: 1.7em;
+    font-size: 13px;
+    outline: 0;
+    text-Shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+    padding:0;}
+/*顶部导航栏*/
+#top {
+    height: 60px;
+    background: #399bff;
+    color: #fff;
+    width: 100%;
+    position: fixed;
+    z-index: 900;
+    top: 0;
+}
+.applogo {
+    width: 250px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.14);
+    color: #fff;
+    position: relative;
+    padding: 19px 0 0 0px;
+    float: left;
+    text-align: center;
+}
+.applogo a{
+    text-decoration: none;
+}
+.applogo .logo {
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+.sidebar-open-button {
+    height: 60px;
+    font-size: 22px;
+    display: block;
+    width: 62px;
+    text-align: center;
+    float: left;
+    color: rgba(0, 0, 0, 0.6);
+    padding-top: 19px;
+    border-right: 1px solid rgba(0, 0, 0, 0.14);
+    z-index: 1;
+}
+/*查找input和小符号*/
+.searchform {
+    width: 220px;
+    margin: 0 20px;
+    float: left;
+    padding-top: 14px;
+    position: relative;
+}
+.searchbox {
+    border-radius: 999px;
+    border: none;
+    height: 32px;
+    width: 220px;
+    padding-left: 20px;
+    padding-right: 36px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #37363e;
+}
+.searchbutton {
+    border: none;
+    color: rgba(0, 0, 0, 0.5);
+    background: none;
+    position: absolute;
+    top: 20px;
+    font-size: 15px;
+    right: 15px;
+}
+.top-menu{
+    float: left;
+    padding-top: 20px;
+    padding-left: 0;
+    font-weight: 300;
+    margin-left: -7px;
+}
+.top-menu li{
+    display: inline-block;
+    margin:0 10px;
+}
+.top-menu li a{
+    color:#efefef;
+    text-decoration: none;
+}
+.top-menu li a:hover{
+    color: white;
+}
+.dropdown-menu li a{
+    color: #37363e;
+}
+.dropdown-menu li a:hover{
+    color: #000000;
+}
+/*顶部右侧边栏*/
+.top-right {
+    line-height: 1.8em;
+    float: right;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-top: 15px;
+    font-weight: 600;
+}
+.top-right .profilebox img {
+    width: 32px;
+    height: 31px;
+    float: left;
+    border-radius: 100%;
+    margin-right: 7px;
+    margin-top: -4px;
+}
+/*顶部结束*/
+/*侧边栏*/
+.aside-menu{
+    width: 250px;
+    height:100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: #3d464d;
+    font-size: 13px;
+    font-weight: normal;
+    z-index: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+.nav-menu{
+    background: none;
+    margin: 0px 20px 0px 20px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 0px;
+}
+.sidetitle{
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 10px;
+    padding: 0;
+    margin: 0 0 5px 3px;
+    letter-spacing: 0.4px;
+}
+.nav li a{
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 9px 20px 9px 54px;
+    margin-left: -20px;
+    margin-right: -20px;
+    position: relative;
+}
+.nav li a:hover{
+    color: #f2f2f2;
+    background: rgba(0, 0, 0, 0.2);
+}
+.nav li a:hover .icon{
+    color: white;
+}
+.nav .icon{
+    position: absolute;
+    left: 20px;
+    top: 8px;
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 19px;
+    border-radius: 3px;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    padding-top: 1px;
+}
+/*头像*/
+.nav li img{
+    height: 150px;
+    width: 260px;
+    display: block;
+}
+.row-size{
+}
+.caption{
+    text-align: center;
+}
+.add-border{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+/*左侧边栏结束*/
+/*开始右侧边栏*/
+.right-body{
+    position: absolute;
+    right:0;
+    width:1520px;
+    height:1000px;
+    background-color: white;
+}

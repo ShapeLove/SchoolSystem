@@ -1,4 +1,4 @@
-<style scoped>
+.<style scoped>
     @import 'styles/common.css';
 </style>
 <template>

@@ -1,0 +1,32 @@
+{
+    "success": true,
+    "message": "",
+    "data": {
+        "pageIndex": 1,
+        "pageSize": 20,
+        "dataList": [
+            {
+                "id": "141501140216",
+                "name": "孙海鹏",
+                "sex": 1,
+                "birthday": "1996-01-19",
+                "intake": "2014-09-09",
+                "phone": "15776588229",
+                "address": "东北石油大学",
+                "classId": 1,
+                  "action":""
+            },
+            {
+                "id": "141501140218",
+                "name": "胡江",
+                "sex": 1,
+                "birthday": "1996-01-19",
+                "intake": "2014-09-09",
+                "phone": "15776588229",
+                "address": "东北石油大学",
+                "classId": 1,
+                "action":""
+            }
+        ]
+    }
+}

@@ -4,122 +4,220 @@
             <Col span="8">
                 <Form :label-width="80">
                     <FormItem label="学号">
-                        <Input  placeholder="请输入学号..."></Input>
+                        <Input  placeholder="请输入学号..." v-model="studentQuery.studentId"></Input>
                     </FormItem>
                 </Form>
             </Col>
             <Col span="8" offset="1">
-                <Button type="primary">查询</Button>
+                <Button type="primary" icon="social-twitter" @click="queryList">查询</Button>
             </Col>
         </Row>
         <Row>
             <Col>
-                <Table border :columns="columns7" :data="data6"></Table>
+                <Table border :columns="studentTitle" :data="studentList"></Table>
             </Col>
         </Row>
         <Row :style="{marginTop: '10px'}">
+            <Col span="8" >
+                <Button type="primary" shape="circle" icon="edit" @click="modal4 = true">录入学生信息</Button>
+            </Col>
             <Col span="4" :style="{float: 'right'}">
                 <Page :current="2" :total="50" simple></Page>
             </Col>
         </Row>
+        <Modal
+            v-model="changeModal"
+            title="修改信息"
+            ok-text="OK"
+            cancel-text="Cancel"
+            @on-ok="change">
+            <Row>
+                <Col span="20">
+                <Form :label-width="80">
+                    <FormItem label="学号">
+                        <Input  placeholder="请输入学号..." v-model="studentInfo.id"></Input>
+                    </FormItem>
+                    <FormItem label="姓名">
+                        <Input  placeholder="请输入姓名..." v-model="studentInfo.name"></Input>
+                    </FormItem>
+                    <FormItem label="性别">
+                        <Input  placeholder="请输入性别..." v-model="studentInfo.sex"></Input>
+                    </FormItem>
+                    <FormItem label="出生日期">
+                        <Input  placeholder="请输入出生日期..." v-model="studentInfo.birthday"></Input>
+                    </FormItem>
+                    <FormItem label="入学时间">
+                        <Input  placeholder="请输入入学时间..." v-model="studentInfo.intake"></Input>
+                    </FormItem>
+                    <FormItem label="电话">
+                        <Input  placeholder="请输入电话..." v-model="studentInfo.phone"></Input>
+                    </FormItem>
+                    <FormItem label="地址">
+                        <Input  placeholder="请输入地址..." v-model="studentInfo.address"></Input>
+                    </FormItem>
+                    <FormItem label="班级">
+                        <Input  placeholder="请输入班级..." v-model="studentInfo.classId"></Input>
+                    </FormItem>
+                </Form>
+                </Col>
+            </Row>
+        </Modal>
+        <Modal
+            v-model="modal4"
+            title="添加学生"
+            ok-text="OK"
+            cancel-text="Cancel"
+            @on-ok="addStudent">
+            <Row>
+                <Col span="20">
+                    <Form :label-width="80">
+                        <FormItem label="学号">
+                            <Input  placeholder="请输入学号..." v-model="studentInfo.id"></Input>
+                         </FormItem>
+                        <FormItem label="姓名">
+                            <Input  placeholder="请输入姓名..." v-model="studentInfo.name"></Input>
+                        </FormItem>
+                        <FormItem label="性别">
+                            <Input  placeholder="请输入性别..." v-model="studentInfo.sex"></Input>
+                        </FormItem>
+                        <FormItem label="出生日期">
+                            <Input  placeholder="请输入出生日期..." v-model="studentInfo.birthday"></Input>
+                        </FormItem>
+                        <FormItem label="入学时间">
+                            <Input  placeholder="请输入入学时间..." v-model="studentInfo.intake"></Input>
+                        </FormItem>
+                        <FormItem label="电话">
+                            <Input  placeholder="请输入电话..." v-model="studentInfo.phone"></Input>
+                        </FormItem>
+                        <FormItem label="地址">
+                            <Input  placeholder="请输入地址..." v-model="studentInfo.address"></Input>
+                        </FormItem>
+                        <FormItem label="班级">
+                            <Input  placeholder="请输入班级..." v-model="studentInfo.classId"></Input>
+                        </FormItem>
+                     </Form>
+                </Col>
+            </Row>
+        </Modal>
     </div>
 </template>
 <script>
     export default {
-        data () {
+        data(){
             return {
-                columns7: [
+                modal4:false,
+                changeModal:false,
+                studentInfo : {
+                    id: '',
+                    name: '',
+                    sex: '',
+                    birthday: '',
+                    intake: '',
+                    phone:'',
+                    address:'',
+                    classId:''
+                },
+                studentQuery: {
+                    studentId:''
+                },
+                studentTitle:[
                     {
-                        title: 'Name',
-                        key: 'name',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Icon', {
-                                    props: {
-                                        type: 'person'
-                                    }
-                                }),
-                                h('strong', params.row.name)
-                            ]);
-                        }
+                        title:'学号',
+                        key:'id'
                     },
                     {
-                        title: 'Age',
-                        key: 'age'
+                        title:'姓名',
+                        key:'name'
                     },
                     {
-                        title: 'Address',
-                        key: 'address'
+                        title:'性别',
+                        key:'sex'
                     },
                     {
-                        title: 'Action',
-                        key: 'action',
-                        width: 150,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
+                        title:'出生日期',
+                        key:'birthday'
+                    },
+                    {
+                        title:'入学时间',
+                        key:'intake'
+                    },
+                    {
+                        title:'电话',
+                        key:'phone'
+                    },
+                    {
+                        title:'地址',
+                        key:'address'
+                    },
+                    {
+                        title:'班级',
+                        key:'classId'
+                    },
+                    {
+                        title:'操作',
+                        key:'action',
+                        render:(h,params) => {
+                            return h('div',[
+                                h('Button',{
+                                    props :{
+                                        type:'primary',
+                                        size:'small'
                                     },
                                     style: {
                                         marginRight: '5px'
                                     },
-                                    on: {
+                                    on:{
                                         click: () => {
-                                            this.show(params.index)
+                                        this.$Message.info('查看')
                                         }
                                     }
-                                }, 'View'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index)
-                                        }
-                                    }
-                                }, 'Delete')
-                            ]);
+                                },'查看')]);
                         }
                     }
                 ],
-                data6: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park'
-                    }
+                studentList: [
                 ]
             }
         },
+        created(){
+            this.queryList();
+        },
         methods: {
-            show (index) {
-                this.$Modal.info({
-                    title: 'User Info',
-                    content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
-                })
+            queryList() {
+                var self = this;
+                this.axios.post('student/list',self.studentQuery)
+                    .then(function(response){
+                        if(response.data.success === true){
+                            var datalist = response.data.data.dataList
+                            self.studentList = datalist;
+                        }else{
+                            self.$Message.error(JSON.stringify(response.data.message));
+                         }
+                    })
+                    .catch(function(error){
+                        self.$Message.error(error.message)
+                    })
+            },
+            addStudent() {
+                    this.$Message.info(JSON.stringify(this.studentInfo));
+                    var self = this;
+                    self.axios.post('http://123.206.28.158:8888/school-system/student/add',self.studentInfo)
+                        .then(function(response){
+                            if(response.data.success === true){
+                                self.queryList();
+                            }else{
+                                this.$Message.error(JSON.stringify(response.data.message));
+                            }
+                        })
+                        .catch(function(error){
+                            self.$Message.error(error.message)
+                        })
             },
             remove (index) {
-                this.data6.splice(index, 1);
+                this.studentList.splice(index, 1);
+            },
+            change(){
+
             }
         }
     }

@@ -1,0 +1,132 @@
+*{
+    font-family: "Microsoft YaHei", "Simsun", Tahoma, Arial,"Helvetica Neue","Hiragino Sans GB", "sans-self";
+    margin:0;
+    padding:0;
+}
+button{
+    outline: none;
+}
+ul{
+    list-style-type: none;
+}
+/*去掉boot自带container   margin边距*/
+.my-container{
+    margin:0;
+    padding:0;
+}
+/*登录按钮*/
+.sign-in-button{
+    height: 50px;
+    color:white;
+    background-color: #03a9f4;
+    border:1px solid #03a9f4;
+    border-radius: 5px;
+}
+.form-loading{
+    position: absolute;
+    right:5px;
+    top: 9px;
+    opacity: 0;
+}
+.sign-in-button:hover{
+    color:white;
+    background-color:#0096da;
+    border:1px solid #0096da;
+    transition: all 0.3s ease-out;
+}
+.sign-in-button:hover span{
+    top:20px;
+    transition: all 0.3s ease-out;
+}
+.sign-in-button:hover .form-loading{
+    opacity:1;
+}
+.sign-in-button:active{
+    color:white;
+    background-color: dodgerblue;
+    border:1px solid dodgerblue;
+}
+.my-button{
+    position: relative;
+}
+.sign-in-button span{
+    color: white;
+    position: absolute;
+    top:16px;
+    left:46%;
+}
+/*注册*/
+.sign-up-button{
+    height: 50px;
+    background-color:white;
+    border:1px solid #03a9f4;
+    color:#03a9f4 ;
+    border-radius: 5px;
+}
+.sign-up-button:hover{
+    background-color: dodgerblue;
+    border:1px solid white;
+    color: white;
+    transition: all 0.3s ease-out;
+}
+.sign-up-button:hover .my-icon{
+    opacity: 1;
+    transition: all 0.3s ease-out;
+    right:16px;
+}
+.sign-up-button:active{
+    background-color: dodgerblue;
+    border:1px solid white;
+    color: white;
+}
+/*重置密码按钮*/
+.review-button{
+    height: 50px;
+    background-color:white;
+    border:1px solid #c1c1c1;
+    color:#c1c1c1 ;
+    border-radius: 5px;
+}
+.review-button:hover{
+    background-color: #c2c2c2;
+    border:1px solid white;
+    color: white;
+    transition: all 0.3s ease-out;
+}
+.review-button:hover .my-icon{
+    opacity: 1;
+    transition: all 0.3s ease-out;
+    right:16px;
+}
+.review-button:active{
+    background-color: #c2c2c2;
+    border:1px solid white;
+    color: white;
+}
+/*错误提示*/
+.error-text{
+    display: inline-block;
+    color:#ff4e00;
+    position: absolute;
+    top:0;
+    left:350px;
+    width:200px;
+    height: 50px;
+    line-height: 50px;
+    opacity: 0;
+}
+/*有showerror这个class的error-text，显示错误信息*/
+.show-error{
+    opacity: 1;
+}
+/*图标大小*/
+.my-icon-size{
+    font-size: 1.5em;
+}
+.my-icon{
+    font-size: 2em;
+    position: absolute;
+    right: 25px;
+    top: 12px;
+    opacity: 0;
+}

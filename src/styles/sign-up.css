@@ -1,0 +1,112 @@
+body{
+    background-color:#efefef;
+}
+/*标题*/
+.header{
+    position: relative;
+    color:#03a9f4;
+    font-size: 17px;
+    width:800px;
+    margin:0 auto;
+    height: 100px;
+}
+.logo{
+    position: absolute;
+    left:0;
+    line-height: 100px;
+    font-size: 30px;
+}
+.logo span{
+    color: #ff4e00;
+    opacity: 0.8;
+}
+.tip{
+    position: absolute;
+    right:0;
+    line-height: 100px;
+}
+.tip span{
+    color: #ff4e00;
+    opacity: 0.8;
+}
+/*注册表显示*/
+.section{
+    width:800px;
+    margin:0 auto;
+    background-color: white;
+    height:600px;
+    border-radius: 5px;
+}
+.form-header{
+    position:relative;
+    top:40px;
+    width:300px;
+    height: 50px;
+    line-height: 50px;
+    background-color: #0096da;
+    color: white;
+    text-align:center ;
+    margin:0 auto 20px;
+}
+.my-form{
+    position: relative;
+    top:60px;
+    width:300px;
+    margin:0 auto;
+}
+.my-form .form-control{
+    height:50px;
+}
+/*input*/
+.first-form{
+    height:50px;
+}
+.form-position{
+    position: relative;
+}
+.email-header{
+    position: absolute;
+    left:0;
+    width:190px;
+}
+.email-bottom{
+    position: absolute;
+    right:0;
+    width:109px;
+    height: 50px;
+}
+.email-height{
+    height:50px;
+}
+/*提示label*/
+.form-group label{
+    position: absolute;
+    left:-70px;
+    line-height: 50px;
+}
+.tip-message{
+    margin: 7px 0 -7px 0;
+    color: #03a9f4;
+    font-size: small;
+}
+.protocol{
+    position: relative;
+    top:10px;
+    font-size: small;
+    text-align: center;
+    color: #b1b1b1;
+}
+.mark-symbol{
+    color:  #ff4e00;
+    cursor: pointer;
+}
+/*尾部*/
+.footer{
+    width:800px;
+    margin:10px auto;
+    position:relative;
+    height:36px;
+    text-align: center;
+    color: #b1b1b1;
+    font-size: 13px;
+}
