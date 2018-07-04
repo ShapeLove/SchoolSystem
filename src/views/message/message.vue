@@ -19,11 +19,11 @@
                <Row>
                    <Col span="20">
                    <Form :label-width="80">
-                       <FormItem label="活动时间">
-                           <Input  placeholder="请输入活动时间..." v-model="messageInfo.adviceDate"></Input>
+                       <FormItem label="通知时间">
+                           <Input  placeholder="请输入通知时间..." v-model="messageInfo.adviceDate"></Input>
                        </FormItem>
-                       <FormItem label="参与人">
-                           <Input  placeholder="请输入参与人..." v-model="messageInfo.content"></Input>
+                       <FormItem label="通知内容">
+                           <Input  placeholder="请输入通知内容..." v-model="messageInfo.content"></Input>
                        </FormItem>
                    </Form>
                    </Col>
@@ -51,6 +51,10 @@
                     {
                         title:'通知内容',
                         key:'content'
+                    },
+                    {
+                        title:'通知号',
+                        key:'id'
                     }
                 ],
                 messageList: [
@@ -66,29 +70,18 @@
                 this.axios.post('advice/list',null)
                     .then(function(response){
                         if(response.data.success === true){
-                            var datalist = response.data.data.dataList
+                            var datalist = response.data.data;
                             self.messageList = datalist;
-                        }else{
-                            self.$Message.error(JSON.stringify(response.data.message));
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error));
                     })
             },
             addMessage() {
-                this.$Message.info(JSON.stringify(this.messageInfo));
                 var self = this;
                 self.axios.post('advice/add',self.messageInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
-                        }else{
-                            this.$Message.error(JSON.stringify(response.data.message));
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error));
                     })
             }
         }

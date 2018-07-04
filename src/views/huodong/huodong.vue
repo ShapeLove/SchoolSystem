@@ -39,9 +39,6 @@
                  <FormItem label="参与人">
                      <Input  placeholder="请输入参与人..." v-model="huodongInfo.attendPerson"></Input>
                  </FormItem>
-                 <FormItem label="班级id">
-                     <Input  placeholder="请输入班级..." v-model="huodongInfo.classId"></Input>
-                 </FormItem>
                  <FormItem label="活动内容">
                      <Input  placeholder="请输入活动内容..." v-model="huodongInfo.content"></Input>
                  </FormItem>
@@ -106,29 +103,16 @@
                         if(response.data.success === true){
                             var datalist = response.data.data.dataList;
                             self.huodongList = datalist;
-                        }else{
-                            self.$Message.error(JSON.stringify(response.data.message));
                         }
                     })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error));
-                    })
-
             },
             addHuodong(){
-                this.$Message.info(JSON.stringify(this.huodongInfo));
                 var self = this;
                 self.axios.post('activity/add',this.huodongInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
                         }
-                        else{
-                            self.$Message.error(JSON.stringify(response.data.message));
-                        }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error));
                     })
             }
         }

@@ -20,6 +20,18 @@
             return {
                 value1: 0
             }
+        },
+        created(){
+            var self = this;
+            self.axios.post('user/userinfo',null)
+                .then(function(response){
+                    var result = response.data;
+                    if(result == 'notlogin'){
+                        //没有登录（正常情况应该输密码登录）
+                    } else {
+                        self.$router.replace({path:'/'})
+                    }
+                })
         }
     }
 </script>

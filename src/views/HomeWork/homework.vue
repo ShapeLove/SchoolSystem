@@ -4,11 +4,11 @@
             <div class="center">
                 <Card :bordered="false">
                     <h4 slot="title"><Icon type="edit"></Icon> 作业公告栏</h4>
-                    <Table border :columns="workTitle" :data="workList"></Table>
+                        <Table border :columns="workTitle" :data="workList" @on-selection-change="selectChange"></Table>
                     <br/><hr/>
                     <br/>
-                    <Button type="warning" shape="circle" icon="edit" style="position: relative;left: 550px;">删除作业</Button>
                     <Button type="primary" shape="circle" icon="edit"  style="position: relative;left: 250px;" @click="workModal = true">布置作业</Button>
+                    <Button type="primary" shape="circle" icon="edit"  style="position: relative;left: 250px;" @click="deleteHomework">删除作业</Button>
                 </Card>
             </div>
             <br/>
@@ -31,6 +31,38 @@
                     </Col>
                 </Row>
             </Modal>
+            <Modal
+                v-model="studentRevertModal"
+                title="家长回复"
+                ok-text="OK"
+                cancel-text="Cancel"
+                @on-ok="addStudentRevert">
+                <Row>
+                    <Col span="20">
+                    <Form :label-width="80">
+                        <FormItem label="家长回复">
+                            <Input  placeholder="请输入家长回复..." v-model=" studentRevertInfo.studentRevert"></Input>
+                        </FormItem>
+                    </Form>
+                    </Col>
+                </Row>
+            </Modal>
+            <Modal
+                v-model="teacherRevertModal"
+                title="教师回复"
+                ok-text="OK"
+                cancel-text="Cancel"
+                @on-ok="addTeacherRevert">
+                <Row>
+                    <Col span="20">
+                    <Form :label-width="80">
+                        <FormItem label="教师回复">
+                            <Input  placeholder="请输入教师回复..." v-model="teacherRevertInfo.teacherRevert"></Input>
+                        </FormItem>
+                    </Form>
+                    </Col>
+                </Row>
+            </Modal>
         </div>
     </div>
 </template>
@@ -41,36 +73,55 @@
         data(){
             return {
                 workModal:false,
-                uploadModal:false,
+                studentRevertModal:false,
                 teacherRevertModal:false,
+                homeworkDeleteList: [],
                 workInfo: {
-                    "classId": 0,
+                    "classId": '',
                     "content": ""
                 },
+                teacherRevertInfo:{
+                    "id": 1,
+                    "teacherRevert": ""
+                },
+                studentRevertInfo:{
+                    "id": 1,
+                    "studentRevert": ""
+                },
+                workList:[
+                ],
                 workTitle:[
                     {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
+                    {
+                        title:'作业号',
+                        key:'id',
+                        width:50
+                    },
+                    {
                         title:'班级',
-                        key:'classId'
+                        key:'classId',
+                        width:50
                     },
                     {
                         title:'作业内容',
                         key:'content'
                     },
                     {
-                        title:'留作业老师',
-                        key:'teacherId'
-                    },
-                    {
                         title:'家长汇报作业情况',
                         key:'studentRevert'
                     },
                     {
-                        title:'教师回复',
-                        key:'teacherRevert'
+                        title:'留作业老师',
+                        key:'teacherId',
+                        width:80
                     },
                     {
-                        title:'作业号',
-                        key:'id'
+                        title:'教师回复',
+                        key:'teacherRevert'
                     },
                     {
                         title:'学号',
@@ -83,37 +134,26 @@
                             return h('div',[
                                 h('Button',{
                                     props:{
-                                        type:'error',
+                                        type:'primary',
                                         size:'small'
                                     },
                                     on:{
                                         click:() => {
-                                            this.addUploadHomework();
+                                            this.show(params.row.id,true);
                                          }
                                     }
                                 },'家长回复'),
                                 h('Button',{
                                     props:{
-                                        type:'error',
+                                        type:'warning',
                                         size:'small'
                                     },
                                     on:{
                                         click: ()=>{
-                                            this.addTeacherRevert();
+                                         this.show(params.row.id,false);
                                         }
                                     }
-                                },'教师回复'),
-                                h('Button',{
-                                    props:{
-                                        type:'error',
-                                        size:'small'
-                                    },
-                                    on:{
-                                        click:()=>{
-
-                                         }
-                                    }
-                                },'删除作业')])
+                                },'教师回复')])
                         }
                     }
                 ]
@@ -129,50 +169,67 @@
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
-                        }else{
-                            this.$Message.error(JSON.stringify(response.data.message));
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(error.message)
                     })
             },
             queryList(){
                 var self = this;
-                this.axios.post('homework/list',null)
+                this.axios.post('homework/list',{})
                     .then(function(response){
                         if(response.data.success === true){
                             var datalist = response.data.data.dataList
                             self.workList = datalist;
-                        }else{
-                            self.$Message.error(JSON.stringify(response.data.message));
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(error.message)
                     })
             },
             /*家长回复*/
-            addUploadHomework(){
+            addStudentRevert(){
                 var self = this;
-                self.axios.post('homework/revert',{})
+                self.axios.post('homework/revert',self.studentRevertInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
-                        }else{
-                            this.$Message.error(JSON.stringify(response.data.message));
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(error.message);
                     })
             },
             /*教师回复*/
             addTeacherRevert(){
-
+                var self = this;
+                self.axios.post('homework/revert',self.teacherRevertInfo)
+                    .then(function(response){
+                        if(response.data.success === true){
+                            self.queryList();
+                        }
+                    })
             },
-            remove (index) {
-                this.workList.splice(index, 1);
+            show(id,flag){
+                if(flag === true){//家长
+                    this.studentRevertModal = true;
+                    this. studentRevertInfo.id = id;
+                } else {
+                    this.teacherRevertModal = true;
+                    this. teacherRevertInfo.id = id;
+                }
+            },
+            selectChange(selection) {
+                this.homeworkDeleteList = [];
+                selection.forEach(function(item) {
+                    this.homeworkDeleteList.push(item.id);
+                }.bind(this));
+                console.log(JSON.stringify(this.homeworkDeleteList));
+            },
+            deleteHomework() {
+                if (this.homeworkDeleteList.length <= 0) {
+                    this.$Message.error("请选择");
+                }else {
+                    var self=this;
+                    this.axios.post ('homework/delete',this.homeworkDeleteList)
+                        .then(function(response){
+                            if(response.data.success === true){
+                                self.queryList();
+                            }
+                        })
+                }
             }
         }
     }

@@ -103,6 +103,13 @@
                     {
                         title: "最高分",
                         key: "max"
+/*                        render:('h',params) => {
+                            params.row.max = Math.max(params.row);
+                            return h('div', {
+                                props: {
+                                },
+                            },'')
+                        }*/
                     },
                     {
                         title: "总分",
@@ -115,7 +122,7 @@
                     {
                         title:"操作",
                         key: "action",
-                        render: (h,param) => {
+/*                        render: (h,param) => {
                             return h('div', [
                                 h('Button', {
                                     props: {
@@ -127,7 +134,7 @@
                                    }
                                }, 'view')
                            ])
-                        }
+                        }*/
                     }
                 ],
                 scoreList: [
@@ -145,27 +152,16 @@
                         if(response.data.success === true){
                             var datalist = response.data.data.dataList;
                             self.scoreList = datalist;
-                        }else{
-                            self.$Message.error(response.data.message);
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error));
                     })
             },
             addScore() {
-                this.$Message.info(JSON.stringify(this.scoreInfo));
                 var self = this;
                 self.axios.post('score/add',self.scoreInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
-                        }else{
-                            self.$Message.error(response.data.message);
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error));
                     })
             }
         }

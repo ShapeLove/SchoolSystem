@@ -86,17 +86,12 @@
         methods:{
             queryList() {
                 var self = this;
-                this.axios.post('leave/list',null)
+                this.axios.post('leave/list',{})
                     .then(function(response){
                         if(response.data.success === true){
-                            var datalist = response.data.data.dataList
+                            var datalist = response.data.data;
                             self.leaveList = datalist;
-                        }else{
-                            self.$Message.error(JSON.stringify(response.data.message));
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(error.message)
                     })
             },
             addleave() {
@@ -105,12 +100,7 @@
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
-                        }else{
-                            this.$Message.error(JSON.stringify(response.data.message));
                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error('错误')
                     })
             }
         }

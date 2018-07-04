@@ -26,43 +26,6 @@
             </Col>
         </Row>
         <Modal
-            v-model="changeModal"
-            title="修改信息"
-            ok-text="OK"
-            cancel-text="Cancel"
-            @on-ok="change">
-            <Row>
-                <Col span="20">
-                <Form :label-width="80">
-                    <FormItem label="学号">
-                        <Input  placeholder="请输入学号..." v-model="studentInfo.id"></Input>
-                    </FormItem>
-                    <FormItem label="姓名">
-                        <Input  placeholder="请输入姓名..." v-model="studentInfo.name"></Input>
-                    </FormItem>
-                    <FormItem label="性别">
-                        <Input  placeholder="请输入性别..." v-model="studentInfo.sex"></Input>
-                    </FormItem>
-                    <FormItem label="出生日期">
-                        <Input  placeholder="请输入出生日期..." v-model="studentInfo.birthday"></Input>
-                    </FormItem>
-                    <FormItem label="入学时间">
-                        <Input  placeholder="请输入入学时间..." v-model="studentInfo.intake"></Input>
-                    </FormItem>
-                    <FormItem label="电话">
-                        <Input  placeholder="请输入电话..." v-model="studentInfo.phone"></Input>
-                    </FormItem>
-                    <FormItem label="地址">
-                        <Input  placeholder="请输入地址..." v-model="studentInfo.address"></Input>
-                    </FormItem>
-                    <FormItem label="班级">
-                        <Input  placeholder="请输入班级..." v-model="studentInfo.classId"></Input>
-                    </FormItem>
-                </Form>
-                </Col>
-            </Row>
-        </Modal>
-        <Modal
             v-model="modal4"
             title="添加学生"
             ok-text="OK"
@@ -91,9 +54,6 @@
                         </FormItem>
                         <FormItem label="地址">
                             <Input  placeholder="请输入地址..." v-model="studentInfo.address"></Input>
-                        </FormItem>
-                        <FormItem label="班级">
-                            <Input  placeholder="请输入班级..." v-model="studentInfo.classId"></Input>
                         </FormItem>
                      </Form>
                 </Col>
@@ -188,14 +148,9 @@
                 this.axios.post('student/list',self.studentQuery)
                     .then(function(response){
                         if(response.data.success === true){
-                            var datalist = response.data.data.dataList
+                            var datalist = response.data.data.dataList;
                             self.studentList = datalist;
-                        }else{
-                            self.$Message.error(JSON.stringify(response.data.message));
-                         }
-                    })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error));
+                        }
                     })
             },
             addStudent() {
@@ -205,16 +160,8 @@
                         .then(function(response){
                             if(response.data.success === true){
                                 self.queryList();
-                            }else{
-                                this.$Message.error(JSON.stringify(response.data.message));
                             }
                         })
-                        .catch(function(error){
-                            self.$Message.error(JSON.stringify(error));
-                        })
-            },
-            remove (index) {
-                this.studentList.splice(index, 1);
             },
             change(){
 

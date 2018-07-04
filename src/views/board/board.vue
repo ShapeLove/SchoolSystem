@@ -1,34 +1,42 @@
 <template>
     <div>
-        <div>留言板</div>
-        <Table border :columns="leaveTitle" :data="leaveList"></Table>
+        <Row>
+            <Col span="8" >
+            <Button type="primary" shape="circle" icon="edit" @click="addBbsModal = true" >发布留言</Button>
+            </Col>
+        </Row>
+        <br />
+        <Table border :columns="bbsTitle" :data="bbsList"></Table>
         <Modal
-            v-model="leaveModal"
-            title="新增教师"
+            v-model="addBbsModal"
+            title="家长新增留言"
             ok-text="OK"
             cancel-text="Cancel"
-            @on-ok="teacherRevert">
+            @on-ok="addBbs">
             <Row>
                 <Col span="20">
                 <Form :label-width="80">
-                    <FormItem label="教师回复">
-                        <Input  placeholder="请输入留言..." v-model="revertModle.teacherRevert"></Input>
+                    <FormItem label="家长新增留言">
+                        <Input  placeholder="请输入留言..." v-model="bbsInfo.content"></Input>
+                    </FormItem>
+                    <FormItem label="留言教师">
+                        <Input  placeholder="请输入教师工号..." v-model="bbsInfo.teacherId"></Input>
                     </FormItem>
                 </Form>
                 </Col>
             </Row>
         </Modal>
         <Modal
-            v-model="leaveModal"
-            title="新增留言"
+            v-model="teacherModal"
+            title="教师回复"
             ok-text="OK"
             cancel-text="Cancel"
-            @on-ok="teacherRevert">
+            @on-ok="addTeacherRevert">
             <Row>
                 <Col span="20">
                 <Form :label-width="80">
-                    <FormItem label="教师回复">
-                        <Input  placeholder="请输入学号..." v-model="revertModle.teacherRevert"></Input>
+                    <FormItem label="发布留言">
+                        <Input  placeholder="请输入留言..." v-model="revertInfo.teacherRevert"></Input>
                     </FormItem>
                 </Form>
                 </Col>
@@ -42,30 +50,43 @@
         name: "board",
         data() {
             return {
-                leaveModal: false,
-                revertModle: {
+                addBbsModal: false,
+                teacherModal:false,
+                revertInfo:{
                     id:'',
                     teacherRevert:''
                 },
-                leaveList: [
-                    {
-                        id: 1,
-                        studentRevert: '给老师留言',
-                        teacherRevert:''
-                    }
+                bbsInfo:{
+                    "bbsDate": null,
+                    "content": "",
+                    "teacherId": ""
+                },
+                bbsList: [
                 ],
-                leaveTitle: [
+                bbsTitle: [
                     {
-                        title: "用户id",
-                        key:"id"
+                        title:'留言',
+                        key:'id'
                     },
                     {
-                        title:"教师留言",
-                        key:"teacherRevert"
+                        title: "时间",
+                        key:"bbsDate"
+                    },
+                    {
+                        title:"学号",
+                        key:"studentId"
+                    },
+                    {
+                        title:"教师",
+                        key:"teacherId"
                     },
                     {
                         title:"家长留言",
-                        key:"studentRevert"
+                        key:"content"
+                    },
+                    {
+                        title:"教师回复",
+                        key:"teacherRevert"
                     },
                     {
                         title:"操作",
@@ -74,16 +95,18 @@
                             return h('div',[
                                 h('Button', {
                                 props: {
-                                    type: 'primary',
+                                    type: 'warning',
                                     size: 'small'
                                 },
+                                    style:{
+                                        marginRight: '5px'
+                                    },
                                 on: {
                                     click: () => {
                                         this.show(params.row.id)
                                     }
-                                }
-                            },'教师回复')/*,
-                            h('Button')*/])
+                                 }
+                             },'教师回复')])
                         }
                     }
                 ]
@@ -91,12 +114,37 @@
         },
         methods: {
             show(id) {
-                this.leaveModal = true;
-                this.revertModle.id = id;
+                this.teacherModal = true;
+                this.revertInfo.id = id;
             },
-            teacherRevert() {
-                this.$Message.info(JSON.stringify(this.revertModle))
-                this.leaveList[0].teacherRevert = this.revertModle.teacherRevert;
+            addBbs(){
+                var self = this;
+                self.axios.post('bbs/add',self. bbsInfo)
+                    .then(function(response){
+                        if(response.data.success === true){
+                            self.queryList();
+                        }
+                    })
+            },
+            queryList(){
+                var self = this;
+                this.axios.post('bbs/list',{})
+                    .then(function(response){
+                        if(response.data.success === true){
+                            var datalist = response.data.data;
+                            self.evaList = datalist;
+                        }
+                    })
+            },
+            addTeacherRevert() {
+ /*               this.bbsList[0].teacherRevert = this.revertModle.teacherRevert;*/
+                var self = this;
+                self.axios.post('bbs/revert',self.teacherRevertInfo)
+                    .then(function(response){
+                        if(response.data.success === true){
+                            self.queryList();
+                        }
+                    })
             }
         }
     }

@@ -4,7 +4,7 @@
             <Col span="8">
             <Form :label-width="80">
                 <FormItem label="学号">
-                    <Input  placeholder="请输入学号..." v-model="evaQuery.evaId"></Input>
+                    <Input  placeholder="请输入学号..." ></Input>
                 </FormItem>
             </Form>
             </Col>
@@ -27,55 +27,39 @@
         </Row>
         <Modal
             v-model="evaModal"
-            title="添加学生"
+            title="添加评价"
             ok-text="OK"
             cancel-text="Cancel"
             @on-ok="addEva">
             <Row>
                 <Col span="20">
-                    <Form :label-width="80">
-                        <FormItem label="学号">
-                            <Input  placeholder="请输入学号..." v-model="evaInfo.studentId"></Input>
-                        </FormItem>
-                        <FormItem label="月评价内容">
-                            <Input  placeholder="请输入月评价..." v-model="evaInfo.teacherEvaluate"></Input>
-                        </FormItem>
-                    </Form>
-                </Col>
-            </Row>
-        </Modal>
-<!--        <Modal
-            v-model="leaveModal"
-            title="教师回复"
-            ok-text="OK"
-            cancel-text="Cancel"
-            @on-ok="teacherRevert">
-            <Row>
-                <Col span="20">
                 <Form :label-width="80">
-                    <FormItem label="教师回复">
-                        <Input  placeholder="请输入留言..." v-model="revertModle.teacherRevert"></Input>
+                    <FormItem label="学号">
+                        <Input  placeholder="请输入学号..." v-model="addEvaInfo.studentId"></Input>
+                    </FormItem>
+                    <FormItem label="对该学生的评价">
+                        <Input  placeholder="请输入评价内容..." v-model="addEvaInfo.teacherEvaluate"></Input>
                     </FormItem>
                 </Form>
                 </Col>
             </Row>
         </Modal>
         <Modal
-            v-model="leaveModal"
-            title="新增留言"
+            v-model="studentRevertModal"
+            title="家长回复"
             ok-text="OK"
             cancel-text="Cancel"
-            @on-ok="teacherRevert">
+            @on-ok="addStudentRevert">
             <Row>
                 <Col span="20">
                 <Form :label-width="80">
-                    <FormItem label="教师回复">
-                        <Input  placeholder="请输入学号..." v-model="revertModle.teacherRevert"></Input>
+                    <FormItem label="家长回复">
+                        <Input  placeholder="请输入家长回复..." v-model=" studentRevertInfo.studentEvaluate"></Input>
                     </FormItem>
                 </Form>
                 </Col>
             </Row>
-        </Modal>-->
+        </Modal>
     </div>
 </template>
 <script>
@@ -83,38 +67,42 @@
         data(){
             return {
                 evaModal:false,
-                evaInfo : {
+                studentRevertModal:false,
+                addEvaInfo: {
                     "studentId": "",
                     "teacherEvaluate": ""
                 },
-                evaQuery: {
-                    studentId:''
+                studentRevertInfo:{
+                    "id": 0,
+                    "studentEvaluate": "",
                 },
-                evaList: [
-                    {
-                        "id": 1,
-                        "studentEvaluate": "222",
-                        "studentId": "150702140208",
-                        "teacherEvaluate": "111",
-                        "teacherId": "06519"
-                    }
+                evaList:[
                 ],
                 evaTitle:[
                     {
-                        title:'学号',
+                        title:'月评价号',
+                        key:'id'
+                    },
+                    {
+                        title:'学生号',
                         key:'studentId'
                     },
                     {
-                        title:'教师',
-                        key:'teacherId'
+                        title:'家长回复',
+                        key:'studentEvaluate'
                     },
                     {
-                        title:'班主任对该学生的评价',
+                        title:'班主任评价',
                         key:'teacherEvaluate'
                     },
                     {
-                        title:'家长回复',
-                        key:'"studentEvaluate'
+                        title:'班主任',
+                        key:'teacherId',
+                        width:80
+                    },
+                    {
+                        title:'学号',
+                        key:'studentId'
                     },
                     {
                         title:'操作',
@@ -122,72 +110,62 @@
                         render:(h,params) => {
                         return h('div',[
                             h('Button',{
-                                props :{
+                                props:{
                                     type:'primary',
                                     size:'small'
                                 },
-                                style:{
-                                    marginRight: '5px'
-                                },
                                 on:{
-                                    click: () => {
-                                         this.$Message.info('回复')
-                                        }
-                                    }
-                                },'家长回复'),
-                                h('Button',{
-                                    props:{
-                                        type:'warning',
-                                        size:'small'
-                                    },
-                                    on:{
-                                        click:() => {
-                                              this.$Message.info('回复')
-                                          }
-                                  }
-                             },'教师回复')]);
-                            }
+                                    click:() => {
+                                    this.show(params.row.id,true);
+                                }
+                                }
+                                    },'家长回复')])
                         }
-                     ]
+                    }
+                ]
             }
         },
         created(){
             this.queryList();
         },
-        methods: {
-            queryList() {
+        methods:{
+            addEva(){
+                var self = this;
+                self.axios.post('evaluate/add',self.addEvaInfo)
+                    .then(function(response){
+                        if(response.data.success === true){
+                            self.queryList();
+                        }
+                    })
+            },
+            queryList(){
                 var self = this;
                 this.axios.post('evaluate/list',{})
                     .then(function(response){
                         if(response.data.success === true){
-                            var datalist = response.data.data.dataList;
+                            var datalist = response.data.data;
                             self.evaList = datalist;
-                            this.$Message.error("进入了query");
-                            this.$Message.error(JSON.stringify(datalist));
-                        }else{
-                            self.$Message.error(JSON.stringify(response.data.message));
                         }
                     })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error))
-                    })
             },
-            addEva() {
+            /*家长回复*/
+            addStudentRevert(){
                 var self = this;
-                self.axios.post('evaluate/add',self.evaInfo)
+                self.axios.post('evaluate/revert',self.studentRevertInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
-                        }else{
-                            this.$Message.error(JSON.stringify(response.data.message));
                         }
                     })
-                    .catch(function(error){
-                        self.$Message.error(JSON.stringify(error))
-                    })
             },
-            remove (index) {
-                this.studentList.splice(index, 1);
+            show(id,flag){
+                if(flag === true){//家长
+                    this.studentRevertModal = true;
+                    this. studentRevertInfo.id = id;
+                } else {
+ /*                   this.teacherRevertModal = true;
+                    this. teacherRevertInfo.id = id;*/
+                }
             }
         }
     }

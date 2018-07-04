@@ -82,12 +82,7 @@
                                 setTimeout(function(){
                                     self.$router.replace({path:'/'});
                                 }, 1000);
-                            } else {
-                                self.$Message.error( result.message);
                             }
-                        })
-                        .catch(function(error){
-                            self.$Message.error("对方不想理你，并向你抛出了个异常");
                         })
                 }
             }
@@ -102,9 +97,7 @@
                     } else {
                         self.$router.replace({path:'/'})
                     }
-                }).catch( function(error) {
-
-            })
+                })
         }
     }
 </script>
