@@ -19,10 +19,10 @@ const routers = [
         path:'/login',
         component:(resovle) => require(['./views/login/login.vue'],resovle)
     },
-    {
+/*    {
         path:'/hxc',
         component:(resolve) => require(['./views/score/hou.vue'],resolve)
-    },
+    },*/
     {
         path: '/student',
         component: Mlayout,

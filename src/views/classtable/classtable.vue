@@ -8,55 +8,55 @@
         <br/>
         <Row>
             <Col>
-               <Table border :columns="weekday" :data="className"></Table>
+               <Table border :columns="weekday" :data="courceList"></Table>
             </Col>
         </Row>
         <Row :style="{marginTop: '10px'}">
                 <Col span="4" >
-                      <Button type="primary" shape="circle" icon="edit" @click="tableModal = true">新建课程表</Button>
+                      <Button type="primary" shape="circle" icon="edit" @click="courceModal = true">新建课程表</Button>
                 </Col>
                 <Col span="4" >
                 <Button type="warning" shape="circle" icon="trash-a" >删除课程表</Button>
                 </Col>
         </Row>
         <Modal
-            v-model="tableModal"
+            v-model="courceModal"
             title="新建课程表"
             ok-text="OK"
             cancel-text="Cancel"
-            @on-ok="addClassTable">
+            @on-ok="addcource">
             <Row>
                 <Col span="20">
                 <Form :label-width="80">
                     <FormItem label="星期一">
-                        <Input  placeholder="上午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="上午第二节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第二节" v-model="tableInfo.id"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.id"></Input>
                     </FormItem>
                     <FormItem label="星期二">
-                        <Input  placeholder="上午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="上午第二节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第二节" v-model="tableInfo.id"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.id"></Input>
                     </FormItem>
                     <FormItem label="星期三">
-                        <Input  placeholder="上午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="上午第二节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第二节" v-model="tableInfo.id"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.id"></Input>
                     </FormItem>
                     <FormItem label="星期四">
-                        <Input  placeholder="上午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="上午第二节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第二节" v-model="tableInfo.id"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.id"></Input>
                     </FormItem>
                     <FormItem label="星期五">
-                        <Input  placeholder="上午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="上午第二节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第一节" v-model="tableInfo.id"></Input>
-                        <Input  placeholder="下午第二节" v-model="tableInfo.id"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.id"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.id"></Input>
                     </FormItem>
                 </Form>
                 </Col>
@@ -69,10 +69,13 @@
     export default {
        data(){
            return {
-               tableModal:false,
-               tableInfo:[
-
-               ],
+               courceModal:false,
+               courceInfo:{
+                   "classId":'',
+                   "content": "",
+                   "jie": '',
+                   "week": ''
+               },
                weekday:[
                    {
                        title:'时间',
@@ -99,7 +102,7 @@
                        key:'Friday'
                    }
                ],
-               className:[
+               courceList:[
                    {
                        "time":'上午第一节',
                        "Monday":"语文",
@@ -141,7 +144,7 @@
             },
             queryList() {
                 var self = this;
-                this.axios.post('',null)
+                this.axios.post('courcetable/list',null)
                     .then(function(response){
                         if(response.data.success === true){
                             var datalist = response.data.data.dataList
@@ -154,10 +157,10 @@
                         self.$Message.error(error.message)
                     })
             },
-            addClassTable() {
+            addcource() {
                 this.$Message.info(JSON.stringify(this.tableInfo));
                 var self = this;
-                self.axios.post('',self.tableInfo)
+                self.axios.post('courcetable/add',self.tableInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();

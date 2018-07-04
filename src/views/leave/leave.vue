@@ -66,6 +66,14 @@
                    {
                        title:'请假课程',
                        key:'subject'
+                   },
+                   {
+                       title:'请假号',
+                       key:'id'
+                   },
+                   {
+                       title:'教师',
+                       key:'teacherId'
                    }
                ],
                leaveList:[
@@ -78,7 +86,7 @@
         methods:{
             queryList() {
                 var self = this;
-                this.axios.post('leave/list',{})
+                this.axios.post('leave/list',null)
                     .then(function(response){
                         if(response.data.success === true){
                             var datalist = response.data.data.dataList
@@ -92,7 +100,6 @@
                     })
             },
             addleave() {
-                this.$Message.info(JSON.stringify(this.leaveInfo));
                 var self = this;
                 self.axios.post('leave/add',self.leaveInfo)
                     .then(function(response){
@@ -103,7 +110,7 @@
                         }
                     })
                     .catch(function(error){
-                        self.$Message.error(error.message)
+                        self.$Message.error('错误')
                     })
             }
         }

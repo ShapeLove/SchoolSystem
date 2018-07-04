@@ -4,7 +4,7 @@
         <Table border :columns="leaveTitle" :data="leaveList"></Table>
         <Modal
             v-model="leaveModal"
-            title="新增请假信息"
+            title="新增教师"
             ok-text="OK"
             cancel-text="Cancel"
             @on-ok="teacherRevert">
@@ -12,7 +12,7 @@
                 <Col span="20">
                 <Form :label-width="80">
                     <FormItem label="教师回复">
-                        <Input  placeholder="请输入学号..." v-model="revertModle.teacherRevert"></Input>
+                        <Input  placeholder="请输入留言..." v-model="revertModle.teacherRevert"></Input>
                     </FormItem>
                 </Form>
                 </Col>
@@ -20,7 +20,7 @@
         </Modal>
         <Modal
             v-model="leaveModal"
-            title="新增请假信息"
+            title="新增留言"
             ok-text="OK"
             cancel-text="Cancel"
             @on-ok="teacherRevert">

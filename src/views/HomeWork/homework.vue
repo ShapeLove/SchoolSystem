@@ -31,50 +31,6 @@
                     </Col>
                 </Row>
             </Modal>
-<!--            <Modal
-                v-model="uploadModal"
-                title="提交作业"
-                ok-text="OK"
-                cancel-text="Cancel"
-                @on-ok=" addUploadHomework">
-                <Row>
-                    <Col span="20">
-                    <Form :label-width="80">
-                        <FormItem label="班级">
-                            <Input  placeholder="请输入班级..." v-model="workInfo.classId"></Input>
-                        </FormItem>
-                        <FormItem label="作业号">
-                            <Input  placeholder="请输入作业号码..." v-model="workInfo.id"></Input>
-                        </FormItem>
-                        <FormItem label="家长回复">
-                            <Input  placeholder="请输入学号..." v-model="workInfo.studentRevert"></Input>
-                        </FormItem>
-                    </Form>
-                    </Col>
-                </Row>
-            </Modal>
-            <Modal
-                v-model="teacherRevertModal"
-                title="教师回复"
-                ok-text="OK"
-                cancel-text="Cancel"
-                @on-ok="addTeacherRevert">
-                <Row>
-                    <Col span="20">
-                    <Form :label-width="80">
-                        <FormItem label="作业号">
-                            <Input  placeholder="请输入作业号码..." v-model="workInfo.id"></Input>
-                        </FormItem>
-                        <FormItem label="学生学号">
-                            <Input  placeholder="请输入学号..." v-model="workInfo.studentId"></Input>
-                        </FormItem>
-                        <FormItem label="教师回复">
-                            <Input  placeholder="请输入学号..." v-model="workInfo.teacherRevert"></Input>
-                        </FormItem>
-                    </Form>
-                    </Col>
-                </Row>
-            </Modal>-->
         </div>
     </div>
 </template>
@@ -88,13 +44,8 @@
                 uploadModal:false,
                 teacherRevertModal:false,
                 workInfo: {
-                    "classId": '',
-                    "content": "",
-                    "id": '',
-                    "studentId": "",
-                    "studentRevert": "",
-                    "teacherId": "",
-                    "teacherRevert": ""
+                    "classId": 0,
+                    "content": ""
                 },
                 workTitle:[
                     {
@@ -104,6 +55,10 @@
                     {
                         title:'作业内容',
                         key:'content'
+                    },
+                    {
+                        title:'留作业老师',
+                        key:'teacherId'
                     },
                     {
                         title:'家长汇报作业情况',
@@ -170,7 +125,7 @@
         methods:{
             addHomework(){
                 var self = this;
-                self.axios.post('',self.workInfo)
+                self.axios.post('homework/add',self.workInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
@@ -184,11 +139,11 @@
             },
             queryList(){
                 var self = this;
-                this.axios.post('',{})
+                this.axios.post('homework/list',null)
                     .then(function(response){
                         if(response.data.success === true){
                             var datalist = response.data.data.dataList
-                            self.studentList = datalist;
+                            self.workList = datalist;
                         }else{
                             self.$Message.error(JSON.stringify(response.data.message));
                         }
@@ -200,7 +155,7 @@
             /*家长回复*/
             addUploadHomework(){
                 var self = this;
-                self.axios.post('',{})
+                self.axios.post('homework/revert',{})
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();
@@ -217,7 +172,7 @@
 
             },
             remove (index) {
-                this.studentList.splice(index, 1);
+                this.workList.splice(index, 1);
             }
         }
     }

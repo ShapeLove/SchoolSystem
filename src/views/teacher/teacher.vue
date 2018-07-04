@@ -165,7 +165,7 @@
             queryList() {
                 this.$Message.info("查询了")
                 var self = this;
-                this.axios.post('http://123.206.28.158:8888/school-system/teacher/list',self.teacherQuery)
+                this.axios.post('teacher/list',self.teacherQuery)
                     .then(function(response){
                         if(response.data.success === true){
                             var datalist = response.data.data.dataList;
@@ -181,7 +181,7 @@
             addTeacher() {
                 this.$Message.info(JSON.stringify(this.teacherInfo));
                 var self = this;
-                self.axios.post('http://123.206.28.158:8888/school-system/teacher/add',self.teacherInfo)
+                self.axios.post('teacher/add',self.teacherInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();

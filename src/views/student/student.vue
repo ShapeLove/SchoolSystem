@@ -195,7 +195,7 @@
                          }
                     })
                     .catch(function(error){
-                        self.$Message.error(error.message)
+                        self.$Message.error(JSON.stringify(error));
                     })
             },
             addStudent() {
@@ -210,7 +210,7 @@
                             }
                         })
                         .catch(function(error){
-                            self.$Message.error(error.message)
+                            self.$Message.error(JSON.stringify(error));
                         })
             },
             remove (index) {
