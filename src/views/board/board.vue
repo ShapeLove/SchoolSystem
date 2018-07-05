@@ -16,6 +16,9 @@
             <Row>
                 <Col span="20">
                 <Form :label-width="80">
+                    <FormItem label="留言时间">
+                        <Input  placeholder="请输入留言..." v-model="bbsInfo.bbsDate"></Input>
+                    </FormItem>
                     <FormItem label="家长新增留言">
                         <Input  placeholder="请输入留言..." v-model="bbsInfo.content"></Input>
                     </FormItem>
@@ -35,7 +38,7 @@
             <Row>
                 <Col span="20">
                 <Form :label-width="80">
-                    <FormItem label="发布留言">
+                    <FormItem label="教师回复">
                         <Input  placeholder="请输入留言..." v-model="revertInfo.teacherRevert"></Input>
                     </FormItem>
                 </Form>
@@ -112,6 +115,9 @@
                 ]
             }
         },
+        created() {
+            this.queryList();
+        },
         methods: {
             show(id) {
                 this.teacherModal = true;
@@ -122,6 +128,7 @@
                 self.axios.post('bbs/add',self. bbsInfo)
                     .then(function(response){
                         if(response.data.success === true){
+                            self.$Message.success("添加成功！");
                             self.queryList();
                         }
                     })
@@ -132,14 +139,13 @@
                     .then(function(response){
                         if(response.data.success === true){
                             var datalist = response.data.data;
-                            self.evaList = datalist;
+                            self.bbsList = datalist;
                         }
                     })
             },
             addTeacherRevert() {
- /*               this.bbsList[0].teacherRevert = this.revertModle.teacherRevert;*/
                 var self = this;
-                self.axios.post('bbs/revert',self.teacherRevertInfo)
+                self.axios.post('bbs/revert',self.revertInfo)
                     .then(function(response){
                         if(response.data.success === true){
                             self.queryList();

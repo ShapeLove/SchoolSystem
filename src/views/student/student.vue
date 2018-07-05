@@ -159,6 +159,7 @@
                     self.axios.post('http://123.206.28.158:8888/school-system/student/add',self.studentInfo)
                         .then(function(response){
                             if(response.data.success === true){
+                                self.$Message.success("添加成功！");
                                 self.queryList();
                             }
                         })

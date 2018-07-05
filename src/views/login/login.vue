@@ -31,7 +31,7 @@
                     </button>
                 </div>
                 <div class="form-group" data-permission="user:resetpassword">
-                    <button type="button" class=" btn-block review-button">
+                    <button type="button" class=" btn-block review-button" @click=" passwordModal = true">
                         <span>忘记密码？重置</span>
                         <span class="glyphicon glyphicon-circle-arrow-right my-icon" aria-hidden="true"></span>
                     </button>
@@ -41,17 +41,18 @@
         <footer class="footer">
             <span>Copyright© 2018-4-16-2018-*-* Powered by S&H </span>
         </footer>
+
     </div>
 </template>
 <script>
     export default{
         name: 'login',
         data() {
-//            {
-//                "userName":"shp",
-//                "userPassword":"123456"
-//            }
             return {
+                passwordModal:false,
+                changePasswordInfo:{
+                    "userPassword": ""
+                },
                 user: {
                     userName: '',
                     userPassword: ''

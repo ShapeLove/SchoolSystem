@@ -73,9 +73,10 @@
                     "studentId": ""
                 },
                 scoreTitle: [
-                    {
-                        type: 'selection'
-                    },
+/*                    {
+                        type: 'selection',
+                        width:80
+                    },*/
                     {
                         title: "学号",
                         key: "studentId"
@@ -102,39 +103,30 @@
                     },
                     {
                         title: "最高分",
-                        key: "max"
-/*                        render:('h',params) => {
-                            params.row.max = Math.max(params.row);
-                            return h('div', {
-                                props: {
-                                },
-                            },'')
-                        }*/
+                        key: "max",
+                        render:(h,params) => {
+                            var rowValue = params.row;
+                            var scoreList = [rowValue.chinese, rowValue.math,rowValue.english, rowValue.music,rowValue.gym];
+                            return h('p', scoreList.sort((a,b) => a-b)[4])
+                        }
                     },
                     {
                         title: "总分",
-                        key: "sum"
+                        key: "sum",
+                        render:(h,params) => {
+                            var rowValue = params.row;
+                            var scoreList = [rowValue.chinese, rowValue.math,rowValue.english, rowValue.music,rowValue.gym];
+                            return h('p',scoreList.reduce((acc, val) => acc + val, 0))
+                        }
                     },
                     {
                         title: "平均分",
-                        key: "ave"
-                    },
-                    {
-                        title:"操作",
-                        key: "action",
-/*                        render: (h,param) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                       size: 'small'
-                                   },
-                                   style: {
-                                        marginRight: '5px'
-                                   }
-                               }, 'view')
-                           ])
-                        }*/
+                        key: "ave",
+                        render:(h,params) => {
+                            var rowValue = params.row;
+                            var scoreList = [rowValue.chinese, rowValue.math,rowValue.english, rowValue.music,rowValue.gym];
+                            return h('p',scoreList.reduce((acc, val) => acc + val, 0) / scoreList.length)
+                          }
                     }
                 ],
                 scoreList: [
@@ -162,7 +154,7 @@
                         if(response.data.success === true){
                             self.queryList();
                         }
-                    })
+                 })
             }
         }
     }
