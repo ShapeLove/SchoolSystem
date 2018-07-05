@@ -66,7 +66,7 @@
         data(){
             return {
                 modal4:false,
-                changeModal:false,
+                /*changeModal:false,*/
                 studentInfo : {
                     id: '',
                     name: '',

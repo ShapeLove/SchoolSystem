@@ -29,34 +29,34 @@
                 <Col span="20">
                 <Form :label-width="80">
                     <FormItem label="星期一">
-                        <Input  placeholder="上午第一节" v-model="courceInfo11.content"></Input>
-                        <Input  placeholder="上午第二节" v-model="courceInfo12.content"></Input>
-                        <Input  placeholder="下午第一节" v-model="courceInfo13.content"></Input>
-                        <Input  placeholder="下午第二节" v-model="courceInfo14.content"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.content"></Input>
                     </FormItem>
                     <FormItem label="星期二">
-                        <Input  placeholder="上午第一节" v-model="courceInfo21.content"></Input>
-                        <Input  placeholder="上午第二节" v-model="courceInfo21.content"></Input>
-                        <Input  placeholder="下午第一节" v-model="courceInfo23.content"></Input>
-                        <Input  placeholder="下午第二节" v-model="courceInfo24.content"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.content"></Input>
                     </FormItem>
                     <FormItem label="星期三">
-                        <Input  placeholder="上午第一节" v-model="courceInfo31.content"></Input>
-                        <Input  placeholder="上午第二节" v-model="courceInfo32.content"></Input>
-                        <Input  placeholder="下午第一节" v-model="courceInfo33.content"></Input>
-                        <Input  placeholder="下午第二节" v-model="courceInfo34.content"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.content"></Input>
                     </FormItem>
                     <FormItem label="星期四">
-                        <Input  placeholder="上午第一节" v-model="courceInfo41.content"></Input>
-                        <Input  placeholder="上午第二节" v-model="courceInfo42.content"></Input>
-                        <Input  placeholder="下午第一节" v-model="courceInfo43.content"></Input>
-                        <Input  placeholder="下午第二节" v-model="courceInfo44.content"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.content"></Input>
                     </FormItem>
                     <FormItem label="星期五">
-                        <Input  placeholder="上午第一节" v-model="courceInfo51.content"></Input>
-                        <Input  placeholder="上午第二节" v-model="courceInfo52.content"></Input>
-                        <Input  placeholder="下午第一节" v-model="courceInfo53.content"></Input>
-                        <Input  placeholder="下午第二节" v-model="courceInfo54.content"></Input>
+                        <Input  placeholder="上午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="上午第二节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第一节" v-model="courceInfo.content"></Input>
+                        <Input  placeholder="下午第二节" v-model="courceInfo.content"></Input>
                     </FormItem>
                 </Form>
                 </Col>
@@ -71,7 +71,7 @@
            return {
                courceModal:false,
                courseInfoList:[],
-               courceInfo11:{
+               courceInfo:{
                    "classId":'',
                    "content": "",
                    "jie": '',
